@@ -121,6 +121,7 @@ lossdf = pd.DataFrame(model.history.history)
 lossdf.plot()
 
 #For Dropout
+from tensorflow.keras.layers import Dropout
 model = Sequential()
 model.add(Dense(units=20, activation="relu"))
 model.add(Dropout(0.5))
@@ -129,7 +130,6 @@ model.add(Dropout(0.5))
 model.add(Dense(units=1, activation = "sigmoid"))
 model.compile(optimizer="adam",loss = "binary_crossentropy")
 
-from tensorflow.keras.layers import Dropout
 earlystopping = EarlyStopping(monitor = "val_loss",mode="min",verbose=1,patience=25)
 model.fit(xtrain,ytrain,epochs=200,validation_data=(xtest,ytest),callbacks=[earlystopping])
 
@@ -137,7 +137,7 @@ lossdf = pd.DataFrame(model.history.history)
 lossdf.plot()
 
 # After completion of the training, predicted the output i.e the target variable on the testing dataset.
-ypred = dt.predict(xtest_tv)
+ypred = model.predict(xtest)
 ypred=model.predict(xtest)
 ypred = ypred > 0.5
 
